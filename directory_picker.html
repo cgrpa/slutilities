@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Directory Picker</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        const root = document.getElementById("root");
+
+        const button = document.createElement("button");
+        button.innerText = "Browse";
+        button.onclick = () => {
+            const input = document.createElement("input");
+            input.type = "file";
+            input.webkitdirectory = true;
+            input.onchange = (e) => {
+                const directoryPath = e.target.files[0].webkitRelativePath.split("/")[0];
+                Streamlit.setComponentValue(directoryPath);
+            };
+            input.click();
+        };
+
+        root.appendChild(button);
+    </script>
+</body>
+</html>

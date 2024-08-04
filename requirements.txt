@@ -1,0 +1,6 @@
+streamlit
+yt-dlp
+tk
+openai
+python-docx
+python-dotenv
