@@ -5,3 +5,4 @@ openai
 python-docx
 python-dotenv
 tabulate
+azure-cognitiveservices-speech
