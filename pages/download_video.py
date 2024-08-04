@@ -1,5 +1,4 @@
 import streamlit as st
-import yt_dlp
 import os
 import threading
 import logging
@@ -8,19 +7,11 @@ import sys
 import io
 import time
 from .logging_utils import MultiStream, redirect_stdout_and_stderr
+from tabulate import tabulate
+import json
+from apis.YouTube.yt_dlp import *
 
-# Function to download a YouTube video with retries
-def download_youtube_video(url, output_path):
-    ydl_opts = {
-        'format': 'best',
-        'outtmpl': os.path.join(output_path, '%(title)s.%(ext)s'),
-        'noplaylist': True,
-        'retries': 5,  # Retry up to 5 times
-        'verbose': True,
-        'socket_timeout': 10,  # Increase socket timeout
-    }
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
+
 
 # Function to get the default downloads folder
 def get_default_download_path():
@@ -65,11 +56,10 @@ def show_download_page():
         def run_download():
             try:
                 print("Log")
-                download_youtube_video(url, output_path)
+                download_youtube_video(url, audio_only = False, output_path=output_path)
                 print("Download finished.")
             except Exception as e:
                 print(f"An unexpected error occurred: {e}")
-                print(f"Sometimes the library fails on certain videos, not sure why, sorry!")
 
         download_thread = threading.Thread(target=run_download)
         download_thread.start()

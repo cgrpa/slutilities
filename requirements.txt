@@ -4,3 +4,4 @@ tk
 openai
 python-docx
 python-dotenv
+tabulate
