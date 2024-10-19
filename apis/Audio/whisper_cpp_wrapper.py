@@ -8,11 +8,11 @@ from apis.Audio.ffmpeg_wrapper import convert_to_16kHz
 load_dotenv()
 
 # Configure logging settings
-def configure_logging(log_level=logging.INFO):
+def configure_logging(log_level=logging.DEBUG):
     logging.basicConfig(level=log_level, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class WhisperTranscriber:
-    def __init__(self, output_directory='/data', log_level=logging.INFO):
+    def __init__(self, output_directory='/data', log_level=logging.DEBUG):
         self.output_directory = output_directory
         configure_logging(log_level)
         self.ensure_output_directory()

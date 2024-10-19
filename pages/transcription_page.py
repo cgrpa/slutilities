@@ -6,7 +6,7 @@ import time
 from pathlib import Path
 from .logging_utils import redirect_stdout_and_stderr
 from apis.Audio.whisper_cpp_wrapper import WhisperTranscriber
-from apis.YouTube.yt_dlp import download_youtube_video
+from apis.YouTube.yt_dlp import download_youtube_video, get_video_metadata
 import sys
 
 def get_default_download_path():
@@ -28,9 +28,17 @@ def show_transcription_page():
         st.write("**YouTube Video URL**")
         url = st.text_input("Enter YouTube Video URL (or leave empty for local file):", '')
         
+        if url:
+            thumbnail_url, title, length = get_video_metadata(url)
+            
+            with st.container():
+                st.image(image=url)
+                st.write(title + '\n')
+                st.write(length)
+        
     with st.container():
         st.write("**Local Video/Audio File**")
-        local_file = st.file_uploader("Upload Video/Audio file", type=['mp3', 'wav', 'm4a', 'mp4'])
+        local_file = st.file_uploader("Upload Video/Audio file", type=['mp3', 'wav', 'm4a', 'mp4'], )
 
     with st.container():
         st.write("**Output Location**")

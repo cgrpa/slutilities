@@ -16,6 +16,19 @@ def save_info_to_json(info_dict, output_folder):
     print(f"Information saved to {file_path}")
 
 
+def get_video_metadata(url):
+    metadata = get_info_youtube_video(url)
+    
+    if not metadata:
+        raise Exception('Metadata is null')
+    
+    thumbnail = [thumbnail for thumbnail in metadata[0]['thumbnails'] if thumbnail['preference'] == 0]
+    thumbnail_url = thumbnail[0]['url']
+    title = metadata[0]['title']
+    length = str(timedelta(seconds=metadata[0]['duration']))
+    
+    return thumbnail_url, title, length
+
 # Get Video Info
 def get_info_youtube_video(url):
     ydl_opts = {

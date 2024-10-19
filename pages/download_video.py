@@ -10,7 +10,22 @@ from .logging_utils import MultiStream, redirect_stdout_and_stderr
 from tabulate import tabulate
 import json
 from apis.YouTube.yt_dlp import *
+from datetime import timedelta
 
+def get_video_metadata(url):
+    metadata = get_info_youtube_video(url)
+    
+    if not metadata:
+        raise Exception('Metadata is null')
+    
+    thumbnail = [thumbnail for thumbnail in metadata[0]['thumbnails'] if thumbnail['preference'] == 0]
+    thumbnail_url = thumbnail[0]['url']
+    title = metadata[0]['title']
+    length = str(timedelta(seconds=metadata[0]['duration']))
+    
+    return thumbnail_url, title, length
+    
+    
 
 
 # Function to get the default downloads folder
@@ -34,7 +49,13 @@ def show_download_page():
         st.write("**YouTube Video URL**")
         
         url = st.text_input("Enter YouTube Video URL", 'https://www.youtube.com/watch?v=G6yC4KXGixE')
-    
+        thumbnail_url, title, length = get_video_metadata(url)
+        
+        with st.container():
+            st.image(image=url)
+            st.write(title + '\n')
+            st.write(length)
+            
     with st.container():
         st.write("**Output Location**")
         col1, col2 = st.columns([3, 1])

@@ -27,7 +27,8 @@ def convert_to_16kHz(audio_file_path):
     if os.path.exists(final_wav_path):
         os.remove(final_wav_path)
     
-    # Convert the input file to a 16 kHz WAV file using ffmpeg
+    # Convert the input file to a 16 kHz WAV fi
+    # le using ffmpeg
     command = ["ffmpeg", "-i", audio_file_path, "-ar", "16000", final_wav_path]
     try:
         subprocess.run(command, check=True)

@@ -6,3 +6,5 @@ python-docx
 python-dotenv
 tabulate
 azure-cognitiveservices-speech
+langchain
+langchain-community
